@@ -22,7 +22,7 @@ export const Projects = () => {
   };
 
   return (
-    <section id="projects">
+    <section id="projects" className="py-24">
       <h2 className="text-center text-4xl font-bold text-white mt-4 mb-2">My Projects</h2>
       <div className="text-white flex flex-row justify-center items-center gap-2 py-4 mb-4">
         <ProjectTag onClick={handleTagChange} name="All" isSelected={tag === 'All'} />

@@ -99,9 +99,9 @@ export const About = () => {
   };
 
   return (
-    <section className="text-white" id="about">
+    <section className="text-white py-24" id="about">
       <div className="md:grid md:grid-cols-2 gap-8  py-8 xl:gap-16 sm:py-16">
-        <Image alt="about me" src="/images/about-image.jpeg" width={500} height={500} />
+        <Image alt="about me" src="/images/hero-image.png" width={500} height={500} />
         <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
           <h2 className="text-4xl font-bold text-white mb-4">About Me</h2>
           <ul className="text-base lg:text-lg list-disc pl-2">

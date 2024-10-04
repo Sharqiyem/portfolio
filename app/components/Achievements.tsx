@@ -10,11 +10,11 @@ const AnimatedNumbers = dynamic(() => import('react-animated-numbers'), {
 
 export const Achievements = () => {
   return (
-    <div className="py-4 xl:gap-16 sm:py-8">
-      <div className="sm:border-[#33353F] sm:border rounded-md py-4  flex flex-col sm:flex-row items-center justify-around">
+    <div className="xl:gap-16 mb-20">
+      <div className="border-[#33353F] border rounded-md py-4 grid grid-cols-2 md:grid-cols-4 gap-2 ">
         {achievementsList.map((achievement: Achievement, index: number) => {
           return (
-            <div key={index} className="flex flex-col items-center justify-center mx-4 my-4 sm:my-0">
+            <div key={index} className="flex flex-col items-center justify-center mx-4 my-4">
               <h2 className="text-white text-4xl font-bold flex flex-row">
                 {achievement.prefix}
                 <AnimatedNumbers

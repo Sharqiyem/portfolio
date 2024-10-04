@@ -5,38 +5,88 @@ import LinkedinIcon from '../../public/icons/linkedin-icon.svg';
 import Link from 'next/link';
 import Image from 'next/image';
 import { SocialLinks } from '@/lib/data';
+import { validateEmail } from '@/lib';
+import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
+
+type ContactFormData = {
+  email: string;
+  subject: string;
+  message: string;
+};
 
 export const ContactForm = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = async (event: SyntheticEvent) => {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
+  const { toast } = useToast();
 
-    const data = {
-      email: form.email.value,
-      subject: form.subject.value,
-      message: form.message.value,
-    };
-    const JSONdata = JSON.stringify(data);
-    const endpoint = '/api/send';
+  const [formData, setFormData] = useState<ContactFormData>({
+    subject: '',
+    email: '',
+    message: '',
+  });
+  // pending state
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSONdata,
-    };
+  const handleInputChange = (name: string, e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.preventDefault();
+    const { value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-    const response = await fetch(endpoint, options);
-    // const resData = await response.json();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-    if (response.status === 200) {
-      console.log('Message sent.');
-      setEmailSubmitted(true);
-      formRef?.current?.reset();
+    if (!formData.subject || !formData.email || !formData.message) {
+      toast({
+        title: 'Error',
+        description: 'Please fill in all fields.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (!validateEmail(formData.email)) {
+      toast({
+        title: 'Error',
+        description: 'Please enter a valid email address.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    try {
+      setIsSubmitting(true);
+      const response = await fetch('/api/send-message', {
+        method: 'POST',
+
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast({
+          title: 'Message sent!',
+          description: "We'll get back to you soon.",
+        });
+        setFormData({ subject: '', email: '', message: '' });
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Error',
+        description: 'Failed to send message. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -70,6 +120,8 @@ export const ContactForm = () => {
               required
               className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
               placeholder="email@gmail.com"
+              value={formData.email}
+              onChange={(e) => handleInputChange('email', e)}
             />
           </div>
           <div className="mb-6">
@@ -83,6 +135,8 @@ export const ContactForm = () => {
               required
               className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
               placeholder="Just saying hello"
+              value={formData.subject}
+              onChange={(e) => handleInputChange('subject', e)}
             />
           </div>
           <div className="mb-6">
@@ -94,11 +148,14 @@ export const ContactForm = () => {
               id="message"
               className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
               placeholder="Let's talk about..."
+              value={formData.message}
+              onChange={(e) => handleInputChange('message', e)}
             />
           </div>
           <button
             type="submit"
-            className="bg-primary-500 hover:bg-primary-600 text-white font-medium py-2.5 px-5 rounded-lg w-full"
+            disabled={isSubmitting}
+            className="bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-5 rounded-lg w-full"
           >
             Send Message
           </button>
