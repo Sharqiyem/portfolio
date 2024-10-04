@@ -38,8 +38,32 @@ export const ContactForm = () => {
     }));
   };
 
+  const fetchSubmissions = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/get-submissions?page=1`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_FORM_FLOW_API_KEY}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Response data:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+    return;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // await fetchSubmissions();
 
     console.log('Sending request to:', process.env.NEXT_PUBLIC_FORM_FLOW_API_URL);
     console.log('Request body:', JSON.stringify(formData));
