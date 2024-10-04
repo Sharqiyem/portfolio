@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import fetch from 'node-fetch';
 
 export async function POST(request: NextRequest) {
-    // console.log({ url: process.env.FORM_FLOW_API_URL, key: process.env.FORM_FLOW_API_KEY });
+    console.log({ url: process.env.FORM_FLOW_API_URL, key: process.env.FORM_FLOW_API_KEY });
 
 
     try {
         const formData = await request.json();
-        // console.log('Form Data:', formData);
+        console.log('Form Data:', formData);
 
         const response = await fetch(process.env.FORM_FLOW_API_URL!, {
             method: 'POST',
