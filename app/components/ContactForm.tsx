@@ -41,6 +41,9 @@ export const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    console.log('Sending request to:', process.env.NEXT_PUBLIC_FORM_FLOW_API_URL);
+    console.log('Request body:', JSON.stringify(formData));
+
     if (!formData.subject || !formData.email || !formData.message) {
       toast({
         title: 'Error',
@@ -60,31 +63,51 @@ export const ContactForm = () => {
     }
     try {
       setIsSubmitting(true);
-      const response = await fetch('/api/send-message', {
-        method: 'POST',
+      console.log('Sending request to:', process.env.NEXT_PUBLIC_FORM_FLOW_API_URL);
+      console.log('Request body:', JSON.stringify(formData));
 
+      const response = await fetch(process.env.NEXT_PUBLIC_FORM_FLOW_API_URL!, {
+        method: 'POST',
+        // mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_FORM_FLOW_API_KEY}`,
         },
         body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
-        toast({
-          title: 'Message sent!',
-          description: "We'll get back to you soon.",
-        });
-        setFormData({ subject: '', email: '', message: '' });
-      } else {
-        throw new Error('Failed to send message');
+      console.log('Response received:', response);
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers));
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
       }
-    } catch (error) {
-      console.error(error);
+
+      const data = await response.json();
+      console.log('Response data:', data);
+
       toast({
-        title: 'Error',
-        description: 'Failed to send message. Please try again.',
-        variant: 'destructive',
+        title: 'Message sent!',
+        description: "We'll get back to you soon.",
       });
+      setFormData({ subject: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Fetch error:', error);
+      if (error instanceof Error) {
+        toast({
+          title: 'Error',
+          description: `Failed to send message: ${error.message}`,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Error',
+          description: 'An unknown error occurred',
+          variant: 'destructive',
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
