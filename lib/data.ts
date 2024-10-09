@@ -25,6 +25,35 @@ export const achievementsList: Achievement[] = [
 
 export const projectsData: Project[] = [
   {
+    id: 11,
+    title: 'SimpleFlowForm',
+    description:
+      'SimpleFlowForm is a service that allows developers to easily add contact forms to static websites without needing a backend or email server. It collects, stores, and provides access to form data through a simple interface.',
+    imageUrl: '/images/projects/11.png',
+    tag: ['All', 'Web'],
+    gitUrl: '/',
+    previewUrl: '/',
+  },
+  {
+    id: 12,
+    title: 'DaPay',
+    description:
+      'Blockchain-Based Payment App with nextjs and solidity. it replicates key functionalities of PayPal using blockchain technology.',
+    imageUrl: '/images/projects/12.png',
+    tag: ['All', 'Web'],
+    gitUrl: '/',
+    previewUrl: '/',
+  },
+  {
+    id: 13,
+    title: 'Plant Identifier App',
+    description: 'mobile application, built with React Native and Expo, allows users to identify plants using their device\'s camera or by uploading images from their gallery. The app leverages AI technology to analyze the images and provide detailed information about the identified plants.',
+    imageUrl: '/images/projects/13.png',
+    tag: ['All', 'Mobile'],
+    gitUrl: '/',
+    previewUrl: '/',
+  },
+  {
     id: 1,
     title: 'Web App - NFT Marketplace',
     description: 'Social media platform to discover, collect, and experience authentic and curated art',
@@ -45,7 +74,7 @@ export const projectsData: Project[] = [
   {
     id: 3,
     title: 'Multi Vendor Wholesale - Buyer',
-    description: 'Platform for online trading',
+    description: 'RusAgroMarket App is a platform for online trading. As well as an IT platform for analyzing supply and demand of goods, pricing, monitoring product quality.',
     imageUrl: '/images/projects/3.png',
     tag: ['All', 'Mobile'],
     gitUrl: '/',
@@ -54,7 +83,7 @@ export const projectsData: Project[] = [
   {
     id: 4,
     title: 'Multi Vendor Wholesale - Vendor',
-    description: 'Platform for online trading',
+    description: 'RusAgroMarket App is a platform for online trading. As well as an IT platform for analyzing supply and demand of goods, pricing, monitoring product quality.',
     imageUrl: '/images/projects/4.png',
     tag: ['All', 'Mobile'],
     gitUrl: '/',
@@ -82,7 +111,7 @@ export const projectsData: Project[] = [
   {
     id: 7,
     title: 'NapataPay',
-    description: 'Electronic payment application',
+    description: 'A comprehensive electronic payment application offering a range of financial services.',
     imageUrl: '/images/projects/7.png',
     tag: ['All', 'Mobile'],
     gitUrl: '/',
@@ -91,7 +120,7 @@ export const projectsData: Project[] = [
   {
     id: 8,
     title: 'Sajjil',
-    description: 'Project 5 description',
+    description: 'GPS-based mobile application that streamlines the search and selection process for Educational Facilities, Nurseries, and Student Hostels.',
     imageUrl: '/images/projects/8.png',
     tag: ['All', 'Mobile'],
     gitUrl: '/',
@@ -116,9 +145,16 @@ export const projectsData: Project[] = [
     gitUrl: '/',
     previewUrl: '/',
   },
+
 ];
 
 export const SocialLinks = {
   github: 'https://github.com/sharqiyem',
   linkedin: 'https://www.linkedin.com/in/abdulsalam-abdulrab-47b8a9138/',
 };
+
+
+// NapataPay is a comprehensive Sudanese electronic payment application offering a range of financial services. It enables users to perform mobile top-ups, pay phone bills, purchase electricity, manage bank cards, transfer funds between accounts, check balances, and make cardless withdrawals. The app aims to provide a convenient and efficient platform for various electronic payment needs in Sudan.
+
+
+// Sajjil is a free GPS-based mobile application that streamlines the search and selection process for Educational Facilities, Nurseries, and Student Hostels. It provides key information about selected organizations, including fees, descriptions, and working hours, and offers online registration capabilities. The app aims to simplify the educational institution selection process for students and parents, and is available for download from mobile application stores.

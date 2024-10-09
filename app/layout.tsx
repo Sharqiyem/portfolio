@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   description: 'Experienced and self-motivated software Engineer with a strong track record in software development.',
 };
 
+if (process.env.NODE_ENV !== 'development') {
+  console.log = () => {};
+  console.error = () => {};
+  console.warn = () => {};
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
